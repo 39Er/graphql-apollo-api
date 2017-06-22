@@ -1,0 +1,19 @@
+{
+  "port": 3000,
+  "mongo": {
+    "host": "172.16.4.152",
+    "port": "27017",
+    "dbName": "db"
+  },
+  "redis": {
+    "host": "127.0.0.1",
+    "port": "6379"
+  },
+  "mainLog": {
+    "name": "graph-api",
+    "level": "debug",
+    "src": false,
+    "errorLogPath": "logs/error.log"
+  },
+  "whitelist": []
+}
