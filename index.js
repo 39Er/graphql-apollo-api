@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const cors = require('cors');
-const {login} = require('./userOperation');
+const { login, register } = require('./userOperation');
 
 const { config, logger } = require('./global');
 
@@ -42,10 +42,12 @@ app.use(session({
   resave: false,
 }));
 
-app.post('/login',login);
-apa.use('/graphql', (req, res, next){
+app.post('/login', login);
+app.post('/register', register);
+apa.use('/graphql', graphqlExpress((req) => {
+ 
 
-});
+}));
 
 app.listen(port, (err) => {
   if (err) {
