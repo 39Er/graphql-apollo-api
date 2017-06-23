@@ -57,10 +57,13 @@ app.use(session({
 app.post('/login', login);
 app.post('/register', register);
 app.use('/graphql', graphqlExpress((req) => {
-  /* if (!req.session || !req.session.user) {
+  if (req.is('application/graphql')) {
+    req.body = { query: req.body };
+  }
+  if (!req.session || !req.session.user) {
     logger.error('Session is invilid');
     throw new Error('Session is invilid');
-  }*/
+  }
   const query = req.query.query || req.body.query;
   if (query && query.length > 2000) {
     throw new Error('Query too large.');
@@ -71,6 +74,10 @@ app.use('/graphql', graphqlExpress((req) => {
       req: req,
       User: new User(),
       Pet: new Pet(),
+    },
+    formatError: (e) => {
+      logger.error(e.message);
+      return e;
     },
   };
 }));
