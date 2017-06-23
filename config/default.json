@@ -3,7 +3,7 @@
   "mongo": {
     "host": "172.16.4.152",
     "port": "27017",
-    "dbName": "db"
+    "dbName": "graphql"
   },
   "redis": {
     "host": "127.0.0.1",

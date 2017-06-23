@@ -1,16 +1,35 @@
 'use strict';
 
 const schema = [`
-  type user {
+  type User {
     id: String
     username: String
+    pets: [String]
+  }
+  input PetInput {
+    name: String!
+    age: Int
+    color: String
+    owner: String
+  }
+  type Pet {
+    id: String
+    name: String
+    age: Int
+    color: String
+    owner: String
   }
 `];
 
 const resolvers = {
   User: {
-    username({ id }, _, context) {
-      return context.UserModel.getUsername(id);
+    id(obj) {
+      return obj._id;
+    },
+  },
+  Pet: {
+    id(obj) {
+      return obj._id;
     },
   },
 };

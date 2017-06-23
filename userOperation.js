@@ -1,6 +1,6 @@
 'use strict';
 
-const User = require('./mongo/connector');
+const { UserDao } = require('./mongo/connector');
 const { passwordEncrypt, encrypt } = require('./lib/passwordEncrypt');
 const { logger } = require('./global');
 
@@ -8,7 +8,7 @@ module.exports.login = async function (req, res) {
   try {
     let username = req.body.username;
     let password = req.body.password;
-    let result = await User.findOne({ username: username }).exec();
+    let result = await UserDao.findOne({ username: username }).exec();
     if (!result) {
       throw new Error('invlid user:%s', username);
     }
@@ -26,7 +26,7 @@ module.exports.login = async function (req, res) {
 
 module.exports.register = async function register(req, res) {
   try {
-    let query = await User.findOne({
+    let query = await UserDao.findOne({
       username: req.body.username,
     }).exec();
     if (query) {
@@ -36,10 +36,11 @@ module.exports.register = async function register(req, res) {
       });
     }
     let encryptResult = await passwordEncrypt(req.body.password);
-    let user = await User.create({
+    let user = await UserDao.create({
       username: req.body.username,
       password: encryptResult.epassword,
       salt: encryptResult.salt,
+      pets: [],
     });
     return res.send({
       statusCode: '200',

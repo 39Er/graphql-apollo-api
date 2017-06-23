@@ -15,16 +15,41 @@ mongoose.connect(dburl, (err) => {
   }
 });
 
+const PetSchema = new Schema({
+  name: {
+    type: 'String',
+  },
+  color: {
+    type: 'String',
+  },
+  age: {
+    type: 'Number',
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+});
+const Pet = mongoose.model('Pet', PetSchema);
+module.exports.PetDao = Pet;
+
 const UserSchema = new Schema({
   username: {
-    type: 'String',
+    type: String,
   },
   password: {
-    type: 'String',
+    type: String,
   },
   salt: {
-    type: 'String',
+    type: String,
+  },
+  pets: {
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Pet',
+    }],
   },
 });
 const User = mongoose.model('User', UserSchema);
-module.exports.User = User;
+module.exports.UserDao = User;
+
