@@ -38,6 +38,9 @@ const rootResolvers = {
       return 'world';
     },
     owner: async function (root, { id }, context) {
+      if (!Types.ObjectId.isValid(id)) {
+        throw new Error('invilid id');
+      }
       let owner = await context.Pet.getOwner(id);
       return owner;
     },

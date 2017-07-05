@@ -1,13 +1,13 @@
 'use strict';
 
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
-const cors = require('cors');
 
 const { config, logger } = require('./global');
 const { login, register } = require('./userOperation');
